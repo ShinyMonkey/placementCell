@@ -1,0 +1,26 @@
+{
+  "name": "placementcell",
+  "version": "1.0.0",
+  "description": "My placement cell project",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Placement"
+  ],
+  "author": "Hemal Murmu",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "express-layouts": "^1.0.0",
+    "express-session": "^1.17.3",
+    "mongoose": "^7.4.2",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
+  }
+}

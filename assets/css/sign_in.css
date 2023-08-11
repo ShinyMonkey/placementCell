@@ -1,0 +1,45 @@
+*{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.s-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    margin: auto;
+    text-align: center;
+    height: auto;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+}
+.s-container p{
+    margin-bottom: 15px;
+}
+form{
+    font-size: large;
+}
+form input{
+    display: block;
+    border-radius: 4px;
+    color: rgb(32,33,36);
+    font-size: 28px;
+    height: 38px;
+    margin: 1px 1px 0 1px;
+    padding: 13px 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+form button{
+    font-size: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+form button:hover{
+    background-color: darkgray;
+}
