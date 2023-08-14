@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/css/add_student.css">
+<div id="main">
+    <form action="/student/addstudent" method="post">
+        <label for="sname">Name</label>
+        <input type="text" name="name" placeholder="Enter Students Name" id="sname" required>
+        <label for="semail">Email</label>
+        <input type="email" name="email" placeholder="Enter Students Email" id="semail" required>
+        <label for="sbatch">Batch</label>
+        <input type="text" name="batch" placeholder="Enter Students Batch" itemref="sbatch" required>
+        <label for="scollege">College</label>
+        <input type="text" name="college" placeholder="Enter Students College" id="scollege" required>
+        <label for="placed-status">Placement Status</label>
+        <select name="placed_status" id="placed-status" required>
+            <option value="Not Placed" selected>Not Placed</option>
+            <option value="Placed">Placed</option>
+        </select>
+        <div id="score">
+            <label for="sdsa">DSA Score :</label>
+            <input type="number" name="dsa_score" max="100" min="0" id="sdsa" required>
+            <label for="swdb">WEB-D Score :</label>
+            <input type="number" name="webd_score" max="100" min="0" id="swdb" required>
+            <label for="sreact">React Score :</label>
+            <input type="number" name="react_score" max="100" min="0" id="sreact" required>
+        </div>
+        
+        <button type="submit">Add Student</button>
+    </form>
+
+</div>

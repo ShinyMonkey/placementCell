@@ -3,6 +3,7 @@ const port=8000;
 const app=express();
 const expressLayouts=require('express-ejs-layouts');
 const db=require('./config/mongoose');
+const mongoStore=require('connect-mongo');
 // for session cookie
 const session=require('express-session');
 const passport=require('passport');
@@ -27,7 +28,14 @@ app.use(session({
     resave:false,
     cookie:{
         maxAge:(1000*60*100),
+    },
+    store: mongoStore.create({
+        mongoUrl: "mongodb://127.0.0.1:27017/Placement_cell",
+        autoRemove: 'disabled',
+    },{function(err){
+        console.log(err || 'mongo-connect setup ok');
     }
+}),
 }));
 
 app.use(passport.initialize());

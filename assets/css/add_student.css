@@ -1,0 +1,54 @@
+body{
+    background-color: whitesmoke;
+}
+
+#main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    width: 45%;
+    height: auto; 
+    padding: 15px;
+}
+
+form>input{
+    display: block;
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+#score input,label{
+    display: inline-block;
+    
+}
+
+#score{
+    margin-bottom: 15px;
+    font-size: 10px;
+}
+
+form button{
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+form button:hover{
+    background-color: darkgrey;
+}
+
+form button:active{
+    background-color: whitesmoke;
+}
+
+input:focus {
+    &::-webkit-input-placeholder {
+       color: transparent;
+       -webkit-transition: color 0.2s ease;
+       transition: color 0.2s ease;
+    }
+}
+
+#placed-status{
+    margin-bottom: 15px;
+}

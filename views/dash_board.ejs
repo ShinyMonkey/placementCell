@@ -1,3 +1,142 @@
-<h1>
-    you are sined in
-</h1>
+
+<link rel="stylesheet" href="/css/dashBoard.css">
+<section class="main-dashboard">
+    <div id="students-list">
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+
+            <div class="accordion-item">
+                <%for(let student of students){%>
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#<%=student.id%>" aria-expanded="false" aria-controls="<%=student.id%>">
+                  <%=student.name%>
+                </button>
+              </h2>
+              <div id="<%=student.id%>" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <table class="table">
+                        <tbody>
+                          <tr>
+                            <td>Name</td>
+                            <td><%=student.name%></td>
+                          </tr>
+                          <tr>
+                            <td>Email</td>
+                            <td><%=student.email%></td>
+                          </tr>
+                          <tr>
+                            <td>BATCH</td>
+                            <td><%=student.batch%></td>
+                          </tr>
+                          <tr>
+                            <td>COLLEGE</td>
+                            <td><%=student.college%></td>
+                          </tr>
+                          <tr>
+                            <td>DSA</td>
+                            <td><%=student.dsa_score%></td>
+                          </tr>
+                          <tr>
+                            <td>WEB-D</td>
+                            <td><%=student.webd_score%></td>
+                          </tr>
+                          <tr>
+                            <td>REACT</td>
+                            <td><%=student.react_score%></td>
+                          </tr>
+                          <tr>
+                            <td>Placed</td>
+                            <td><%=student.placed_status%></td>
+                          </tr>
+                        </tbody>
+                    </table>
+                    
+                    
+                    <div id="button-container">
+                        <a href="/user/destroy/<%=student._id%>"><button>Delete</button></a>
+                        <a href="/user/students-profile/<%=student._id%>"><button>Edit</button></a>
+                    </div>
+                </div>
+                <h3>Interviews</h3>
+                    <table class="table">
+                      <tbody>
+                        <%for(interview of student.interviews){%>
+                        <tr>
+                          <td>Company-Name</td>
+                          <td><%=interview.company_name%></td>
+                        </tr>
+                        <tr>
+                          <td>Result</td>
+                          <td><%=interview.result%></td>
+                        </tr>
+                        <tr>
+                          <td>Date Of Interview</td>
+                          <td><%=interview.date%></td>
+                        </tr>
+                        <%}%>
+                      </tbody>
+                    </table>
+                
+              </div>
+              
+              <%}%>
+            </div>
+            
+          </div>
+          
+    </div>
+    <div id="Interview-list">
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+
+        <div class="accordion-item">
+            <%for(let interview of interviews){%>
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#<%=interview.id%>" aria-expanded="false" aria-controls="<%=interview.id%>">
+              <%=interview.company_name%>
+            </button>
+          </h2>
+          <div id="<%=interview.id%>" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Company-Name</td>
+                    <td><%=interview.company_name%></td>
+                  </tr>
+                  <tr>
+                    <td>Date</td>
+                    <td><%=interview.date%></td>
+                  </tr>
+                </tbody>
+            </table>
+            <div class="students">
+              <%for(students of interview.students){%>
+                <p><%=students.student.name%></p>
+                <%}%>
+            </div>
+            <div class="add-student">
+              <form action="/interview/allocation/<%=interview._id%>" method="post">
+                <label for="In-email">Student's Email</label>
+                <input type="email" name="email" required id="In-email" placeholder="email-id of the student">
+                <label for="result">Result</label>
+                <select name="result" id="result">
+                  <option value="PASS">PASS</option>
+                  <option value="FAIL">FAIL</option>
+                  <option value="Didn't Attempt" selected>Didn't Attempt</option>
+                  <option value="On Hold">On Hold</option>
+                </select>
+                <button type="submit" style="display: block;">Add-Student</button>
+              </form>
+            </div>
+                </div>
+            </div>
+          </div>
+          <%}%>
+        </div>  
+      </div>
+
+
+    </div>
+
+
+
+</section>
