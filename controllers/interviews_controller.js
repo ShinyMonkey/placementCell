@@ -29,8 +29,10 @@ module.exports.allocateInterview= async function(req,res){
                 // is student already enrolled for the company
                 let isStudent=await Interview.findOne({"students.student": student.id});
                 if(isStudent){
-                    console.log('yes');
-                    return res.redirect('back');
+                    if(isStudent.company_name == interview.company_name){
+                        return res.redirect('back');
+                    }
+                    // console.log(isStudent.company_name == interview.company_name)
                 }
                 let interviewStudent={
                     student:student.id,
@@ -49,41 +51,47 @@ module.exports.allocateInterview= async function(req,res){
                     result:req.body.result,
                 }
                 await student.updateOne({$push:{interviews:studentInterview}});
-
+                req.flash('success','Interview Allocated Successfully');
                 return res.redirect('back');
             }
             return res.redirect('back');
 
             
         }
-        
-        // if(student){
-            // is student already enrolled for the company
-            // let isStudent=await Interview.findOne({"students.student": student.id});
-            // if(isStudent){
-            //     return res.redirect('back');
-            // }
-
-            // let interviewStudent={
-            //     student:student.id,
-            //     result:result,
-            // }
-
-            // updating the students in interview
-            // await Interview.updateOne({students:interviewStudent});
-
-            // updatind interview in students student
-            // let studentInterview={
-            //     Interview:req.params.id,
-            //     result:req.body,result,
-            // }
-            // await Student.updateOne({interviews:studentInterview});
+ 
             return res.redirect('back');
 
-        // }
     } catch (error) {
         console.log('Error:',error);
         return;
     }
 }
 
+
+
+module.exports.deAllocation= async function(req,res){
+    try {
+        const interview= await Interview.findById(req.params.interviewId);
+
+        if(interview){
+
+
+            // removing the reference of the interviews in students
+            await Student.findOneAndUpdate({_id:req.params.studentId},
+                {$pull:{interviews:{company_name:interview.company_name}}
+            })
+            
+
+            // removing the reference of the student in interviews
+            await Interview.findOneAndUpdate({_id:req.params.interviewId},{
+                $pull:{students:{student: req.params.studentId}}
+            })
+            req.flash('success','Student Removed From An Interview');
+            return res.redirect('back');
+        }
+        return res.redirect('back');
+    } catch (error) {
+        console.log('Error:',error);
+        return;
+    }
+}

@@ -18,6 +18,7 @@ module.exports.create=async function(req,res){
 
     if(!student){
         await Student.create(req.body);
+        req.flash('success','Student Added Successfully');
         return res.redirect('/user/dashboard');
     }else{
         return res.redirect('back')

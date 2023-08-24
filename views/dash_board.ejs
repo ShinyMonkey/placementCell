@@ -57,9 +57,10 @@
                     </div>
                 </div>
                 <h3>Interviews</h3>
+                <%for(interview of student.interviews){%>
                     <table class="table">
                       <tbody>
-                        <%for(interview of student.interviews){%>
+                        
                         <tr>
                           <td>Company-Name</td>
                           <td><%=interview.company_name%></td>
@@ -72,10 +73,10 @@
                           <td>Date Of Interview</td>
                           <td><%=interview.date%></td>
                         </tr>
-                        <%}%>
+                        
                       </tbody>
                     </table>
-                
+                    <%}%>
               </div>
               
               <%}%>
@@ -90,11 +91,11 @@
         <div class="accordion-item">
             <%for(let interview of interviews){%>
           <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#<%=interview.id%>" aria-expanded="false" aria-controls="<%=interview.id%>">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#<%=interview._id%>" aria-expanded="false" aria-controls="<%=interview._id%>">
               <%=interview.company_name%>
             </button>
           </h2>
-          <div id="<%=interview.id%>" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <div id="<%=interview._id%>" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
               <table class="table">
                 <tbody>
@@ -109,9 +110,26 @@
                 </tbody>
             </table>
             <div class="students">
-              <%for(students of interview.students){%>
-                <p><%=students.student.name%></p>
-                <%}%>
+              <table class="table">
+                <thead>Students Enrolled</thead>
+                <tbody>
+                  <%for(students of interview.students){%>
+                    <tr>
+                      <td>Name:</td>
+                      <td><%=students.student.name%></td>
+                    </tr>
+                    <tr>
+                      <td>Results:</td>
+                      <td><%=students.result%></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <a href="/interview/de-allocation/<%=interview._id%>/<%=students.student._id%>"><Button>Remove-Student</Button></a>
+                      </td>
+                    </tr>
+                    <%}%>
+                </tbody>
+              </table>   
             </div>
             <div class="add-student">
               <form action="/interview/allocation/<%=interview._id%>" method="post">

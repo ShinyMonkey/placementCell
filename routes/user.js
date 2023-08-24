@@ -13,4 +13,5 @@ router.get('/sign-out',userController.destroysession);
 router.get('/students-profile/:id',passport.checkAuthentication,userController.studentsProfile);
 router.post('/update/:id',passport.checkAuthentication,userController.update);
 router.get('/destroy/:id',passport.checkAuthentication,userController.destroy);
+router.get('/downloadCSV',passport.checkAuthentication,userController.downloadCSV)
 module.exports=router;

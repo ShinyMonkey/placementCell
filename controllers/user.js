@@ -1,8 +1,11 @@
-
 // using user Model
 const User=require('../models/user');
 const Student=require('../models/student');
 const Interview=require('../models/interview');
+
+// reqyired for downloading the data in csv
+const fs=require('fs');
+const path=require('path');
 
 
 
@@ -69,6 +72,7 @@ module.exports.create=async function(req,res){
 
 // singign-in
 module.exports.creatSession=function(req,res){
+    req.flash('success','You Loged-in Successfully');
     return res.redirect('/user/dashboard')
 }
 
@@ -78,6 +82,7 @@ module.exports.destroysession=function(req,res){
     req.logout(function(err){
         if (err) { return next(err);
         }else{
+            req.flash('success','You Loged-out Successfully');
             return res.redirect('/');
         }
 });
@@ -88,9 +93,11 @@ module.exports.studentsProfile=async function(req,res){
     try {
         let student= await Student.findById(req.params.id);
     if(!student){
+        req.flash('error','Error while finding the student');
         return console.log("No student found");
     }else{
-        console.log(student);
+        // console.log(student);
+        
         return res.render('edit',{
             title: "Edit Window Of the Student",
             student:student,
@@ -120,6 +127,7 @@ module.exports.update=async function(req,res){
             student.webd_score=req.body.webd_score;
             student.react_score=req.body.react_score;
             student.save();
+            req.flash('success','Student Detail Edited Successfully');
             return res.redirect('back');
         }
         
@@ -152,9 +160,67 @@ module.exports.destroy=async function(req,res){
         }
         console.log(studentsInterviews)
         student.deleteOne();
+        req.flash('success','Students Removed Successfully');
         return res.redirect('back');
     } catch (error) {
         console.log('Error',error);
         return;
     };
+}
+
+
+
+// download Csv
+
+module.exports.downloadCSV=async function(req,res){
+    try {
+        let students=await Student.find({});
+        let data= "Student name,Email, Batch, College, DSA Score, WEB-D Score, REACT Score, Placed-Status, Interview Company, Interview Date, Interview Status";
+        let studentdata= "";
+        for(let student of students){
+            console.log(studentdata)
+            studentdata=student.name
+            +","+
+            student.email
+            +","+
+            student.batch
+            +","+
+            student.college
+            +","+
+            student.dsa_score
+            +","+
+            student.webd_score
+            +","+
+            student.react_score
+            +","+
+            student.placed_status;
+            
+            if(student.interviews.length>0){
+                for(let interview of student.interviews){
+                    let studentdata1="";
+                    studentdata1 += ","+interview.company_name
+                    +","+
+                    interview.date.toString()
+                    +","+
+                    interview.result;
+                    data+="\n"+studentdata+studentdata1;
+                }
+            }else{
+                data+="\n"+studentdata ;
+            }
+        }
+        const csv=fs.writeFile("upload/studentsCSV.csv",data,
+        function(err,data){
+            if(err){
+                console.log("Error while creating the .csv file",err);
+                return res.redirect('back');
+            }
+            req.flash('success','Report is being Downloaded');
+            return res.download('upload/studentsCSV.csv');
+        }
+        );
+    } catch (error) {
+        console.log('Error',error);
+        return;
+    }
 }
